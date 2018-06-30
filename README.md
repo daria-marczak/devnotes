@@ -1,0 +1,1 @@
+## Personal notes from courses / ideas
