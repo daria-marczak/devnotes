@@ -26,7 +26,7 @@ It's also possible to use the same syntax as in the links, so: ![Cute pup][pup]
 
 A hyperlink using a photo: [![](address)](photo adress)
 
-===
+---
 
 ## Lists – ordered, unordered, bullets
 
@@ -48,13 +48,13 @@ A hyperlink using a photo: [![](address)](photo adress)
         This is a paragraph
         *You can't control the bullet*
 
-===
+---
 
 ## Line breaks
 For a full line break, use <br> tag.
-For horizontal line use at least 3 - or == but you need to have an enter before hand 
+For horizontal line use at least 3 - or * but you need to have an enter beforehand 
 
-===
+---
 
 ## Block quotes
 For quotes, use chevron: >
@@ -64,7 +64,7 @@ For quotes, use chevron: >
 > Praesent gravida placerat placerat. Maecenas gravida, turpis sit amet feugiat pharetra, metus nulla maximus neque, eleifend iaculis lectus nisl in ex. Curabitur et eros eget nulla ornare rutrum ac eu diam. Curabitur mattis neque eu purus posuere, sed placerat felis accumsan. Nullam aliquet at nisl at ultrices. Integer semper luctus lobortis. Morbi dictum dignissim eros eu sodales. Aliquam rutrum pretium tortor eget scelerisque. Nam id orci accumsan nunc egestas suscipit in a turpis. 
 > **Donec ut auctor ante.**
 
-===
+---
 
 ## Code snippets
 To have code snippets, go ahead and use three ticks. It actually has id's for further list of content creation.
@@ -93,7 +93,7 @@ const x = 100;
 + const y = 300;
 ```
 
-===
+---
 
 ## Tables
 Are not part of every standard.
@@ -108,7 +108,7 @@ You should put a pipe around every thing that you want. But you need |: ----| fo
 
 The :- actually aligns it to the left, :-: aligns it to the center and -: to the right!
 
-=== 
+---
 
 ## Checkboxes
 * [ ] Should use asterisk, and square brackets

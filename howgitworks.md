@@ -1,6 +1,6 @@
 # Notes from How git works course from Paolo Perrotta
 
-===
+---
 
 The basic idea in git is a simple map: it maps keys to values. It's persistent: stored on the disc. Values are the sequences of bytes that has a calculated key with SHA1hash. 
 
@@ -8,7 +8,7 @@ The basic idea in git is a simple map: it maps keys to values. It's persistent: 
 
 SHA1s are unique.
 
-===
+---
 
 ## Storing things
 
@@ -23,7 +23,7 @@ Where -t flag stand for the type.It will tell us that it's a blob. The `-p` comm
 
 Using `git cat` we can read the file inside the terminal.
 
-===
+---
 ## First commit
 To commit a file, we need to put into the staging area (the often used git add __file name__ or `git add .`). It stores the commit in objects directory. It also has a SHA1 of the tree – the root of the directory. It's a tiny piece of text, containing a list of SHA1.
 
@@ -31,7 +31,7 @@ In the tree there are another blobs. A blob is just a content of the file. File 
 
 There is no magic behind the SHA1 – If I have the same content, I will have the same SHA1. It's different in terms of commit – there's different date for example.
 
-===
+---
 ## Versioning
 If we change a file, in git log we will see a tree but also a parent. The commits are linked. The tree of the second commit will not be the same. To cat-file we can also use **first few digits of the SHA1** unless there are multiple SHA1 starting with the same few digits.
 
