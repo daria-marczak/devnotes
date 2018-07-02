@@ -108,3 +108,31 @@ Before this happens, we can actually get those commit with their SHA1, create a 
 - The current branch tracks new commits
 - When you move to another commit, git updates your working directory
 - Unreachable objects are garbage collected
+
+## Rebase
+We have two branches, each has its commits. We could simply merge them. But we will rebase the second one. ``git checkout secondBranch, git rebase master``. Git will then look in the first commit in the secondBranch, which is also a commit in the master, the parent of both branches. Git will detach the entire branch and move it on the top of the master. But the database objects are **immutable**, git cannot just detach the entire branch. The first blue commit will get a new SHA1, the other commits receive one as well so they actually become new objects thus new commits. They are new files in the directory and the old commits are actually left behind. In this case the old commits will be **almost impossible to reach**. If we don't have the SHA1 for them, git will **garbage collect unreachable objects**.
+It will look like this:
+
+![Diagram](https://i.imgur.com/NaNe1re.png)
+
+The secondBranch has both the commits from its branch as well as the master's. There are no conflicts to be resolved.
+
+If we want the commits from secondBranch to be on the master, we can
+
+```
+git checkout master // Master is now the current branch
+git rebase secondBranch
+
+```
+It will work just like a merge. But the branches are just rearranged.
+
+![Diagram](https://i.imgur.com/JRm80Md.png)
+
+We have merging and rebasing because of different trades-off. 
+
+|Merging|Rebase|
+|:------|:-----|
+|It preserves history exactly as it happened|Rebase history looks simple and neat. Commits are in the same timeline. |
+|Less simple when you have a large project|Rebase helps refactor project history. But it actually changes the project's history.|
+
+**When in doubt, just merge**.
