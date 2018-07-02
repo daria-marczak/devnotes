@@ -136,3 +136,23 @@ We have merging and rebasing because of different trades-off.
 |Less simple when you have a large project|Rebase helps refactor project history. But it actually changes the project's history.|
 
 **When in doubt, just merge**.
+
+## Tags
+A tag is a reference to an object. It also has a SHA1.
+Tag works almost like a branch, but with a huge difference: while branches can move, a tag cannot.
+
+## Distribution
+To use the same repo from a different machine, use ``git clone``. We get the entire .git directory as well. Both clones have the repo's history.
+
+Git added a few lines to the configuration of the repository. Each git repository will have the information about other remote repos (clones). It will then have the default remote: origin. 
+
+To list all the branches, both local and remote, use ``git branch --all``. To avoid having several files for each branch, git packs them into the file named packed-refs.
+
+``git show-ref master`` will show all the branches with the master in the name, so in this case, the local one and the remote one.
+
+When we have several users working on the same repo, we **cannot just push** as others will not have the same commits. When the origin changes, we need to fix the conflict on our own machine. We need to fetch the data from the origin: ``git fetch``. We get the new objects from the remote. We can then merge the commits: ``git merge origin/master``. We should also probably resolve the conflict. We do not actually overwrite the history. After those steps, we should call ``git push``. It is so common that it's actually shortened to ``git pull``, so ``git fetch`` connected with ``git merge``.
+
+If we rebase locally, there will also be a conflict on origin. And every other user will have the conflict. So **never rebase shared commits**.
+
+## Github features
+A fork is a bit like a clone, but it clones it remotely. Then we can actually clone the remote repository on our local machine. There is no connection at all to the original project. If we actually want to work on the original origin, we should set an upstream origin. We do not have the full access to however. We can, however, ask the original to do a **pull request**.
