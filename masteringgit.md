@@ -56,3 +56,33 @@ If we modify a file from two different branches, we have a conflict. When we try
 
 ## Working paths
 If we have a file that we want to reset to its previous version and try to use ``git reset --hard HEAD fileName``, git will tell us that it cannot do hard reset with paths. The most common way to do this is using checkout: ``git checkout HEAD fileName``. It's one of the most distructive commands in git.
+
+## Project history
+We can use ``git log --graph --decorate --oneline"`` to get a more graphical representation of the history of our project. If we want to see the details about a commit that a branch points at, ``git show SHA1`` will show it to us. We can also refer to it as branch name instead of SHA1. ``git show HEAD^`` will show a parent commit of the HEAD. Whenever a more remote parent is needed, we should call ``git show HEAD~6`` where the number stands for how many commits from the HEAD it is. However with multiple parents it becomes more complicated. Where there are two parents and they are 2 commits away from the HEAD, we should call ``git show HEAD~2^2``. 
+
+``git show HEAD@{"1 month ago"}`` works too.
+
+``git blame fileName`` will show all the changes made in the specified file.
+
+With ``git diff`` we can also compare the current commit with the two commits earlier: ``git diff HEAD HEAD~2``. We can also compare branches: ``git diff branchName master``.
+
+### Log
+Most useful method to explore history.  ``git log --patch`` will give detailed info about a commit. We can also filter the commits using ``git log --grep <word>`` to show us only the specified word in the message. 
+If we want to list the commits that are in master branch but not in a specific branch, we should use ``git log specificBranchName..master --online``.
+
+## Fixing mistakes in the history
+**Never rebase shared commits.** It actually changes history, as it copies old commits to new commits. It can introduce conflict that would be extremely tricky to fix. 
+
+### Changing the latest commit
+Instead of doing a second commit, we want to change the previous one so that it's completed. ``git commit --amend`` will kind of merge the commits together 
+
+Git will actually copies the previous commit and then the branch is changing place to point the new commit. The previous one will be then garbage collected.
+
+### Interactive rebases
+When we have a commit that has been done quite some time ago and we want to fix that, we could actually commit the fix once more and then use the command ``git rebase --interactive`` ( ``--i`` for short). We will then have a list of commits. We can move up and down and use the commands git presents, i.e. "reword" for changing the message of the commit. If we had a conflict in commits we are rebasing, we need to solve the conflict once more. 
+
+### Reflog
+It's a reference log that informs about all the changes to head that we have done. Every checkout, rebase, commit, reset will be noted. Every action has a SHA1 so we can still look at some of the garbaged collected files. We can recover them. 
+
+### Reverting commits
+We can use `` git revert SHA1``. **Revert does not mean undo**. The closest one to it is probably ``reset``. 
