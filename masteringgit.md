@@ -47,3 +47,12 @@ It does different things in different contexts. It can move a branch to look at 
 If we have commited two files and we actually don't want them to be in the repository, we want to make it as if the last 2 commits never happened. We can use ``git reset --hard SHA1`` where the SHA1 is actually the commit from before those new ones. Git will then move the head with the branch to the new current commit: the one before the changes. It will also change the changed files to both index and working area. The commits that have no branch pointing at them will soon be garbage collected.
 
 If we want to remove a staged file, as git suggests, we can use the command ``git reset HEAD <fileName>`` to unstage. It's actually a ``git reset mixed`` as this is a default reset. 
+
+## Stash
+When we are working on a file and then we need to work on another before actually finishing the first job, we can use ``git stash`` so that our staged files do not confuse the other work. ``git stash --include-untracked`` will, as said, include the untracted files in the stash. Then we will be in line with the current commit. We can read the content of stash with ``git stash list``. To move the data from the stash to the working area and the index using ``git stash apply``. Then we can stage these updates and commit it all. After we clear the stash using ``git stash clear``. 
+
+## Solving conflicts
+If we modify a file from two different branches, we have a conflict. When we try to merge one from there to the master, git will inform that both branches have modified the same file. It has changed the file in the working area so that we can see if we want to overwrite it. When we go to the file, we will see which branch has what data. We can then manually edit the file and decide what the merged file should look like. Now that we have solve the conflict, we need to inform git that we have solved it. So we ``git add fileName`` because we have edited it. All we then have to do is to commit the data. 
+
+## Working paths
+If we have a file that we want to reset to its previous version and try to use ``git reset --hard HEAD fileName``, git will tell us that it cannot do hard reset with paths. The most common way to do this is using checkout: ``git checkout HEAD fileName``. It's one of the most distructive commands in git.
