@@ -5,3 +5,12 @@ Wes Bos course on markdown to be used on Github and Slack
 
 ## [How git works](https://github.com/daria-marczak/devnotes/blob/master/howgitworks.md)
 Paolo Perrotta course on basic git
+
+## [Mastering git](https://github.com/daria-marczak/devnotes/blob/master/masteringgit.md)
+Continuation of Paolo Perrotta's course on git
+
+## [Commandline](https://github.com/daria-marczak/devnotes/blob/master/commandline.md)
+Basics on command line from Wes Bos
+
+## [Testing](https://github.com/daria-marczak/devnotes/blob/master/testingnotes.md)
+Testing notes from Daniel Stern course
