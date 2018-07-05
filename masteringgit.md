@@ -49,7 +49,7 @@ If we have commited two files and we actually don't want them to be in the repos
 If we want to remove a staged file, as git suggests, we can use the command ``git reset HEAD <fileName>`` to unstage. It's actually a ``git reset mixed`` as this is a default reset. 
 
 ## Stash
-When we are working on a file and then we need to work on another before actually finishing the first job, we can use ``git stash`` so that our staged files do not confuse the other work. ``git stash --include-untracked`` will, as said, include the untracted files in the stash. Then we will be in line with the current commit. We can read the content of stash with ``git stash list``. To move the data from the stash to the working area and the index using ``git stash apply``. Then we can stage these updates and commit it all. After we clear the stash using ``git stash clear``. 
+When we are working on a file and then we need to work on another before actually finishing the first job, we can use ``git stash`` so that our staged files do not confuse the other work. ``git stash --include-untracked`` will, as said, include the untracted files in the stash. Then we will be in line with the current commit. We can read the content of stash with ``git stash list``. To move the data from the stash to the working area and the index using ``git stash apply``. Then we can stage these updates and commit it all. After we clear the stash using ``git stash clear``. We can also use ``git stash pop`` that will automatically stage the updates and clear the stash.
 
 ## Solving conflicts
 If we modify a file from two different branches, we have a conflict. When we try to merge one from there to the master, git will inform that both branches have modified the same file. It has changed the file in the working area so that we can see if we want to overwrite it. When we go to the file, we will see which branch has what data. We can then manually edit the file and decide what the merged file should look like. Now that we have solve the conflict, we need to inform git that we have solved it. So we ``git add fileName`` because we have edited it. All we then have to do is to commit the data. 
@@ -86,3 +86,32 @@ It's a reference log that informs about all the changes to head that we have don
 
 ### Reverting commits
 We can use `` git revert SHA1``. **Revert does not mean undo**. The closest one to it is probably ``reset``. 
+
+## Distributed Workflow
+
+### Distriubtion models
+There is a centralized model where there is a "blessed" origin that everybody pulls from and pushes to. There is also a twist into in: there are only some people that can push to the repo, they are called the maintainers. The others are called contributers. If they want to push something, they need to ask. The pull request is sent to the maintainer and if they deem it OK, the changes will be then pushed to the "blessed" origin. This is actually a pull reuest model. 
+A third model is a main project with a maintainer, and two subprojects. Regular contributors send PRs to a subproject maintainer and they send it to main project maintainer. 
+
+### Branching models
+We call a branch stable when the tip of the branch always contains the working version of the project. The integration branch (master) is either stable or unstable, this depends of the project. In a project we can also have a branch for releases, where we can keep the branch more stable. In some project we can have several release branches. 
+
+If we want to have a commit from one feature branch on another one, we can do the cherry-pick. This will copy them on the top of the second branch. But it's like a tiny rebase. It's not a good solution for merge-based projects. 
+
+One of the way to work with branches is to actually commit fixes on another branch, a third one that could then be merged to the two other branches. We then have still two branches but they both contain fixes. 
+
+
+### Constraints
++ Rebase don't merge / merge, don't rebase – It depends on a project, but of course it should be consistent across the project
++ Only developer X can do Y on branch Z
++ Don't push to a red build (red means the build is broken)
++ Squash a feature to a single commit before you merge it to master 
++ And so on
+
+Those are only some constraints that can appear. There are some many diverse constraints it's important to set a model upfront.
+
+---
+
+To change the configuration of git, type ``git config --global core.editor nano``.
+
+If we amend a commit that has been already pushed to the repository, in order to change the file in the repository, we need to use ``git push --force`` for it to change. But never use force with shared repository.
