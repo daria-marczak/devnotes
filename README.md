@@ -14,3 +14,6 @@ Basics on command line from Wes Bos
 
 ## [Testing](https://github.com/daria-marczak/devnotes/blob/master/testingnotes.md)
 Testing notes from Daniel Stern course
+
+##[Redux-Saga](https://github.com/daria-marczak/devnotes/blob/master/reduxsaga.md)
+Redux-Saga notes from Daniel Stern course
