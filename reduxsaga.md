@@ -323,3 +323,104 @@ We will get an uncought saga, but the process will continue to loop. This happen
 #### All
 + Combines numerous take statements into one
 + Code execution resumes when all actions have been dispatched (in any order)
+
+### Channels
+There are three different types of channels:
+1. Action channel that buffers actions to be processed one at a time
+1. Even channel connects app to outside event sources 
+1. Generic channel communicates between two sagas
+
+#### Action channels
++ Records all events with specified type
++ Calling take accesses and removes oldest record
++ Used to handle actions that would otherwise be lost
+
+```
+    function* updateSaga() {
+        let chan = yield actionChannel("UPDATE");
+        while (true) {
+            yield effects.take(chan);
+            console.info("Update logged");
+            yield delay(1000);
+        }
+    }
+
+    run(updateSaga);
+    dispatch({type: "UPDATE"});
+```
+
+The process slowly updates as the action comes to the channel.
+
+#### Generic channels
++ Creates a special line of communication between two sagas
++ Action types is not required
+
+```
+    function* saga() {
+        let chan = yield channel();
+        function* handleRequest(chan) {
+            while(true) {
+                let payload = yield effects.take(chan);
+                console.info("Got payload", payload);
+                yield delay(1000);
+            }
+        }
+        yield effects.fork(handleRequest, chan);
+        yield effects.fork(handleRequest, chan);
+
+        yield effects.put(chan, {payload: 42});
+        yield effects.put(chan, {payload: 42});
+        yield effects.put(chan, {payload: 42});
+        yield effects.put(chan, {payload: 42});
+    }
+```
+
+Payload is gotten by respective handlers. If we loop this three times, we will have first handler that has 2 payloads and second that has one.
+
+#### Event channel
++ Wraps an outside source of events (i.e. WebSocket)
++ Sagas can take from event channel (the outside events)
++ Event channel converts events into take-able actions and emits them
+
+
+## Testing redux-saga applications
++ Tests need to avoid making real AJAX calls
++ Effects do not do anything unless run by redux-saga
++ Call effects must be used instead of yielding directly to API methods
+
+```
+    function* mySaga(sessionKey) {
+        let users = yield api.fetchUsers(sessionKey);
+    }
+```
+This saga is untestable, invoking the generator will actually call API.
+
+``` 
+    function* mySaga(sessionKey) {
+        let users = yield call([api, api.fetchUsers]),(sessionKey);
+    }
+```
+
+Testable saga yields a call effect, no outside APIs are called except when run in redux-saga. Passing an array to call allows context to be specified for methods.
+
+### Methods for testing redux-saga applications
+
+#### Official methods
++ Saga is executed as plain generator
++ Tests pass mock values to next()
++ Structure of effects is tested agains expected values
++ Store is never used
+
+#### Alternate methods
++ Mock store and application state are created
++ Entire saga is run from beginning to the end
++ At completion, new state is compared to expected value
++ APIs must be injected as dependencies
+
+|Standard (unit tests)|Alternate (end-to-end tests)|
+|:--------------------|:---------------------------|
+|Requires that call be used for functions|Call usage recommended but not required|
+|Cannot test application state against expected values|Can test application state against expected values|
+|Outside APIs can be imported with no special considerations|Any outside APIs must be injected as dependencies|
+|Test are brief and simple to set up|Tests are cmplex and require preparation of mock store and APIs|
+|Test fails if yielded effects do not match expected values|Test fails if final application state does not match expected values|
