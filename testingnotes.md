@@ -46,3 +46,25 @@ One person adds a new features which improves some views. They are now correct. 
 + Creates a scenario to test by simulating user actions
 + Different in nature and more difficult to write than other tests
 + Provide the best assurance that the app works
+
+## Jest
++ A library installed via npm or yarn and run via the command line
++ Similar to popular test-runners but with handy extra features
++ A tool made by a team including members of React team
++ Adds snapshot testing, mocking and many other useful features
++ Includes superior assertion library, CLI
++ Works with or without React
+
+### Jest testing ecosystem
++ Enzyme
++ Jasmine / Mocha (Jest is built on top of it)
+
+#### Jasmine / Mocha
++ Test-runners that organizes tests into "describe" and "it" blocks (or "suite" and "test")
++ All assertions inside test are verified whenever the test-runner is invoked, e.g. with command line
++ Doesn't include mocking or snapshots
+
+#### Enzyme
++ Not a test runner like Jest, but provides tools to test React apps specifically
++ Expresses component output as HTML (like React test renderer)
++ Potentially useful but not for every project
