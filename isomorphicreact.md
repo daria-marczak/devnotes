@@ -52,3 +52,31 @@ An application where the server and the client are written in the same language,
 |Code needs to be organized, clear and highly traceable|Code should be obfuscated, compact, and not expose sensitive data|
 |Tooling is needed to allow developers to see app's internal state|Tooling is needed to track user's activity and expose bugs|
 
+## Isomorphic React
+### Code sharing
++ One of the principal advantages of our architecture choices
++ Uses some of the same code for client as for server
++ Server can load client libraries, making server rendering possible
+
+React renders the views and handles routing with react-router. Express is responsible for fetching data to create the initial state. It uses React to render the app on the server. It also runs Webpack instance in development to serve app bundle. Express loads templates and serves static files. Webpack takes the JS and compiles it into ES5 and serves it. It also injects updated modules directly into client. Compiles modules into a single, static ES5 JS file for production.
+
+### Data injection
+1. Data is prepared by server
+1. Data is then converted to JSON and injected into index
+1. Client application has data immediately
+
+It reslts in a longer initial load.
+
+### Server rendering
+1. Data is prepared by server
+1. HTML for app is rendered on server by passing to app (this can still take a bit of time, though it's usually a lot fastr than data injection)
+1. Client application sees rendered view even though data is not yet fetched
+
+|Data injection|Server rendering|
+|:-------------|:---------------|
+|Server must be capable of handling data fetching|Server must be capable of rendering hte app and fetching data|
+|Can result in fastest load time, if he data is simple and the app is complex|Can result in fastest load time, if the data is complex and the app is simple|
+|Doesn't work on devices with no JS|Works great on devices with no JS|
+|Complex render can cause performance issues on initial load (especially mobile)|In-client rendering may still be slow but end-user sees finalapp right away, and so perceives it as fast|
+|Can skip first AJAX request to fetch data|Still needs to fetch data after initial load|
+
