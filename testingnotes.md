@@ -46,3 +46,53 @@ One person adds a new features which improves some views. They are now correct. 
 + Creates a scenario to test by simulating user actions
 + Different in nature and more difficult to write than other tests
 + Provide the best assurance that the app works
+
+## Jest
++ A library installed via npm or yarn and run via the command line
++ Similar to popular test-runners but with handy extra features
++ A tool made by a team including members of React team
++ Adds snapshot testing, mocking and many other useful features
++ Includes superior assertion library, CLI
++ Works with or without React
+
+### Jest testing ecosystem
++ Enzyme
++ Jasmine / Mocha (Jest is built on top of it)
+
+#### Jasmine / Mocha
++ Test-runners that organizes tests into "describe" and "it" blocks (or "suite" and "test")
++ All assertions inside test are verified whenever the test-runner is invoked, e.g. with command line
++ Doesn't include mocking or snapshots
+
+#### Enzyme
++ Not a test runner like Jest, but provides tools to test React apps specifically
++ Expresses component output as HTML (like React test renderer)
++ Potentially useful but not for every project
+
+### Jest vs Mocha
+|Function|Jest|Mocha|
+|:-------|:---|:----|
+|Runs tests|Yes|Yes|
+|Asynchronous|Yes|Yes|
+|Spies included|Yes|No|
+|Snapshot testing|Yes|No|
+|Module mocking|Yes|No|
+
+
+### Jest CLI
+A tool that we use to run Jest from the command line and provides configuration options to Jest
+
+Test files can be named either **.spec.js* or **.test.js*
+
+#### Tests in their own folder
+|Test in their own folder|Test alongside components|
+|:-----------------------|:------------------------|
+|Easily distniguish between test and non-test files|Which files are components and which files are spec is not as obvious|
+|Unrelated files can share a folder (i.e. a "loginService" test and a "cryptoHash" test|Tests are always adjacent to the files they apply to|
+|Very easy to isolate a prticular set of tests that are in the same folder|Unrelated tests are less likely to share a folder|
+|Tests can be named anything but must be inside an appropriately named folder (i.e. __ tests __), to be recognized|Tests must have a correct naming pattern to be recognized, i.e. *.test.js |
+||Possible to isolate tests based on name paterns, i.e., user-*|
+
+### Jest globals
++ It (test) – method which you pass a function to, that function is executed as block of tests by the test runner
++ Describe (suite) – an optional method for grouping any number of it statements
