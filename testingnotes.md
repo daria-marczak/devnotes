@@ -96,3 +96,43 @@ Test files can be named either **.spec.js* or **.test.js*
 ### Jest globals
 + It (test) – method which you pass a function to, that function is executed as block of tests by the test runner
 + Describe (suite) – an optional method for grouping any number of it statements
+
+### Skipping and isolating tests
++ Skipping a test results in that test not being run
++ Isolating a test results in only it (and any other isolated tests) running
+
+```
+    it.only("should be isolated", () => {
+        ...code
+    });
+    
+    it.skip("should be skipped", () => {
+        ... code
+    });
+```
+
+### Asynchronous tests
++ Contains assertions (just like a regular test)
++ Does not complete instantaneously
++ Can take varying amounts of time, even an unknown amount of time
++ Jest must be notified that test is complete
+
+#### Defining asynchronous test
++ Invoke the done() callback that is passed to the test
+```
+    it("async test", done => {
+        setTimeout(done, 100);
+    });
+```
++ Return a promise from a test
+```
+    it("async test",() => {
+        new Promise() (
+            resolve => setTimeout(resolve, 100);
+        );
+    });
+```
++ Pass an async function to describe (the cleanest syntax)
+```
+    it("async test", async () => awair delay(100));
+```
