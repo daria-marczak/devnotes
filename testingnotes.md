@@ -136,3 +136,38 @@ Test files can be named either **.spec.js* or **.test.js*
 ```
     it("async test", async () => awair delay(100));
 ```
+
+## Jest mocks
++ Reduces dependencies required by tests (faster execution)
++ Prevents side-effects during testing
++ Facilitates desired testing procedure
+
+### Mock
++ A convincing duplicate of an object with no internal workings
++ Can be automatically or manually created
++ Has same API as original, but no side-effects
++ Spies and other mock features simplify testing
+
+### Mocking process
+1. Scan the original object for methods, give the new object spy methods with the same names
+2. Esnure that any methods which returned a promise still return a promice in the mock
+3. Create mocks for any complex values that are returned from methods which are reauired for tests
+
+### Mock functions 
+Also known as spies, as they give an insight on how the method is interacted with. They create no side-effects. Spies count function calls. It also records what arguments are passed in. We can load the function up with return values. The new value must be approximately original.
+
+### Creating mock files
+The mock has to be named appropriately, as NPM mocks are loaded automatically. Mocks must reside in __ mocks __ folder next to mocked module. NPM modules and local modules can both be mocked. 
+
+### Manual mocks vs automatic ones
+|Manual mocking|Automatic mocking|
+|:-----------------------|:------------------------|
+|Exists as a separate file alongside the file being mocked|Most modules can be automatically replaced with mocks|
+|Manual mocks will be used automatically for NPM modules|Mocks are usually generated correctly, but sometimes not|
+|Manual mocks are more work than automatic mocks|Greatly reduced likelihood of side-effects during tests|
+|Needs to be updated when mocked file changes|Developer must use discretion |
+
+#### Automated mocking challenges
++ Methods returning a specific and complex value often can't be mocked automatically
++ Methods that are not part of your module at compile-time won't be mocked
++ Modules that you did not expect to be mocked may be mocked
