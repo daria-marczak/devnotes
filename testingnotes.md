@@ -171,3 +171,22 @@ The mock has to be named appropriately, as NPM mocks are loaded automatically. M
 + Methods returning a specific and complex value often can't be mocked automatically
 + Methods that are not part of your module at compile-time won't be mocked
 + Modules that you did not expect to be mocked may be mocked
+
+
+## Snapshot testing
+A snapshot is a JSON file: it's a record of a component's output. Jest compared it to component's actual output during testing process. It's comitted along with other modules and tests to the application repo.
+
+To create a snapshot we need to import the component and renderer from react-test-renderer. We use ``renderer.create`` to create a tree, which is a representation of HTML output of the component. In this example enzyme is not used.
+
+We then need an assertion ``toMatchSnapshot()``. However, the first time it's called, it just creates a snapshot, it has nothing to compare it to. Nothing is being tested. But once the file with JSON exists, it compares the representation.
+
+``expect(tree.toJSON()).toMatchSnapshot()`` is the full method that we need to call to create a snapshot.
+
+### Snapshot testing process
+1. Creation of a new component
+1. Snapshot is generated automatically
+1. Commit of changes
+1. Other person makes a change to a dependency of the component
+1. A new snapshot is automatically generated
+1. Test suite sees that the snapshots don't match so it fails until will be updated (if the change was intended, they can update the snapshot)
+
