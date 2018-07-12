@@ -190,3 +190,41 @@ We then need an assertion ``toMatchSnapshot()``. However, the first time it's ca
 1. A new snapshot is automatically generated
 1. Test suite sees that the snapshots don't match so it fails until will be updated (if the change was intended, they can update the snapshot)
 
+Snapshot tests are actually showing what does not match the snapshot taken of the component.
+
+### Advantages and disadvantages
+
+|Advantages|Disadvantages|
+|:---------|:------------|
+|Fast and automatic|Easy to ignore and suppress|
+|Catches regressions humans may miss|Protects only against regression|
+|Works nicely with libraries that take in state and output HTML components (React, Angular, Vue)|If a component is working incorrectly and then is fixed, a snapshot test will say it is now broken|
+|Adds some protection against regression when no time is available for manually writing tests|Adds extra files to an already crowded repo|
+|Requires little training or knowledge of testing to use|Sensitive to incidental changes|
+||A waste of resources, if component is certain to be modified in near future|
+
+### Updating snapshot
+If we made a meaningful change to a test and we want to update the snapshot, we should use ``-u`` standing for update.
+
+## Building testable React components
++ No internal state – output is an idempotent product of the props that are provided
++ No side-effects – any AJAX calls, UI changes or other side effects are hadnled by sagas, thunks, etc., but not by components
++ No lifecycle hooks – fetching data is handled on the application level, not the component level
+
+## React-Redux and Jest
++ Components don't generate side effects
++ Component consists of logical display and container components
++ Components do not have internal state
+
+### How to test?
++ Test container and display elements separately
++ Use unit tests to verify methods and properties passed by container are accurate
++ Use snapshot tests to verify the output of the display component, passing props in directly
+
+### React-test-renderer vs. Enzyme
+|React-test-renderer|Enzyme|
+|:------------------|:-----|
+|Takes a React component and outputs the resulting HTML without a DOM|Takes a React component and outputs the resulting HTML without a DOM|
+|From the React team|From AirBnB team|
+|Useful for getting the output HTML of a component for snapshot testing|Useful for testing a variety of interactions including click, keyboard input, and more|
+|Recommended by the Jest team|Has a variety of open bugs which make using it a challenge|
