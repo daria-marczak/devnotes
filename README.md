@@ -20,3 +20,6 @@ Redux-Saga notes from Daniel Stern course
 
 ## [Isomorphic React](https://github.com/daria-marczak/devnotes/blob/master/isomorphicreact.md)
 Learning about isomorphism from Daniel Stern course
+
+## [Practical Design Patterns](https://github.com/daria-marczak/devnotes/blob/master/practical-design-patterns.md)
+Learning about design patterns from Jonathan Mills course
