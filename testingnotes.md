@@ -228,3 +228,41 @@ If we made a meaningful change to a test and we want to update the snapshot, we 
 |From the React team|From AirBnB team|
 |Useful for getting the output HTML of a component for snapshot testing|Useful for testing a variety of interactions including click, keyboard input, and more|
 |Recommended by the Jest team|Has a variety of open bugs which make using it a challenge|
+
+### Testing stateful React comopnents
++ Mock dependencies, then test them
++ Use spies to verify side-effects
++ Move logic from lifecycle to services
++ Prevent regression with snapshots
++ Inject values by writing mocks for services
++ Make stateless components, where possible
+
+## Matcher
++ Also known as an assertion or expectation
++ It's a representation of a claim that a value will be equal (or not) to something
++ Throws an error (test fails) if matcher's claim is not equal
+
+```
+function test() {
+    const value = getValue43();
+    if (value !== 43) {
+        throw new Error(/**/);
+    }
+}
+```
+It's  a handwritten test with an if statement. It throws an error that results in the test failing, not in the aplication failing.
+
+```
+function test2() {
+    const value = getValue43();
+    expect(value).toEqual(43);
+}
+```
+Equivalent code using a matcher. It's much clearer. 
+
+### Types
++ Not – reverses an assertion. If an assertion without not would pass, assertion with not will fail
++ To be and To Equal – Verify that two values are equivalent. Two arrays with matching elements are equal, but not identical. Very general: use more specific matcher when possible
++ To be close to – like *toEqual* for numbers, but assertion still passes if numbers are close but not equal. For assertions involing floating point numbers.
++ To contain and to have length – array matchers which verify the contents and size of a collection
+
